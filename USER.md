@@ -5,8 +5,13 @@
 ## 基础信息
 
 - **Name:** 王同学
-- **What to call them:** 王同学 / violin
+- **What to call them:** 王同学
 - **Timezone:** Asia/Shanghai
+
+## 身份
+
+- 自由职业者
+- 方向：学习 AI 相关技术，做自己的自媒体
 
 ## 工作方式
 
