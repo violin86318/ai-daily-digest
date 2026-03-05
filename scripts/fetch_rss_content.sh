@@ -1,16 +1,26 @@
 #!/bin/bash
 # 4小时摘要原始内容抓取脚本
-# 用法: ./fetch_rss_content.sh <时间戳> <RSS来源数量>
-# 例: ./fetch_rss_content.sh "2026-03-04_0000" 3
+# 用法: ./fetch_rss_content.sh [时间戳]
+# 例: ./fetch_rss_content.sh "2026-03-05_1600"
+# 不带参数则自动计算上一时段
 
 set -e
 
-TIMESTAMP="$1"
+# 自动计算上一时段（当前小时 - 4）
+if [ -z "$1" ]; then
+    CURRENT_HOUR=$(date +%-H)
+    PREV_HOUR=$((CURRENT_HOUR - 4))
+    # 处理跨天情况
+    if [ $PREV_HOUR -lt 0 ]; then
+        PREV_HOUR=$((PREV_HOUR + 24))
+    fi
+    TIMESTAMP="$(date +%Y-%m-%d)_$(printf "%02d00" $PREV_HOUR)"
+else
+    TIMESTAMP="$1"
+fi
+
 BASE_DIR="$HOME/ai-daily-digest/$(date +%Y)/$(date +%m)/$(date +%Y-%m-%d)"
 OUTPUT_FILE="$BASE_DIR/${TIMESTAMP}_04h_原始内容.md"
-
-# 默认参数
-TIMESTAMP="${TIMESTAMP:-$(date +%Y-%m-%d_%H00)}"
 COUNT="${2:-3}"
 
 echo "=== RSS 原始内容抓取 ==="
